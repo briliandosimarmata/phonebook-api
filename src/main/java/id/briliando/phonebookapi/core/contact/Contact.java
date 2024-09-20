@@ -61,4 +61,20 @@ public class Contact {
             throw new RuntimeException("Ukuran file maksimal hanya " + maxLength + " kB.");
         }
     }
+
+    public void valAvatarFileTypeMustBeJPG() {
+        if (this.avatar != null && this.avatar.length < 3) {
+            throw new RuntimeException("Avatar file type must be JPG.");
+        }
+
+        //magic signature jpg file type
+        boolean isFileTypeJPG = this.avatar != null && this.avatar.length > 3
+                && (this.avatar[0] & 0xFF) == 0xFF
+                && (this.avatar[1] & 0xFF) == 0xD8
+                && (this.avatar[2] & 0xFF) == 0xFF;
+
+        if (!isFileTypeJPG) {
+            throw new RuntimeException("Avatar file type must be JPG.");
+        }
+    }
 }

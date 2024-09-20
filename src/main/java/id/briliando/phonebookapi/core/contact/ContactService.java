@@ -44,5 +44,6 @@ public class ContactService {
         contact.valPhoneNumberMaxLength();
         contact.valPhoneNumberOnlyContainsNumeric();
         contact.valAvatarMaxLength();
+        contact.valAvatarFileTypeMustBeJPG();
     }
 }
