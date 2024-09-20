@@ -24,6 +24,8 @@ public class ContactService {
 
     @Transactional
     public Contact editContact(Contact contact) {
+        if (repository.findContactById(contact.getId()) == null)
+            throw new RuntimeException("Contact does not exists.");
         valContactData(contact);
         return repository.editContact(contact);
     }

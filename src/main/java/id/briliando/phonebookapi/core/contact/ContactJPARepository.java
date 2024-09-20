@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Queue;
 
 @Repository
@@ -60,7 +61,11 @@ public class ContactJPARepository extends SimpleJpaRepository<ContactEntity, Str
 
     @Override
     public Contact findContactById(String id) {
-        ContactEntity contactEntity = getReferenceById(id);
+        ContactEntity contactEntity = findById(id).orElse(null);
+
+        if (contactEntity == null) {
+            return null;
+        }
 
         return new Contact(contactEntity.getId(), contactEntity.getName(),
                 contactEntity.getPhoneNumber(), contactEntity.getAvatar(),
