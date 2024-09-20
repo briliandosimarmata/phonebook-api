@@ -13,11 +13,18 @@ import lombok.Setter;
 public class ResponseDto {
 
     private Object data;
-    private String message;
+    private Message message;
 
     public static ResponseDto data(Object data) {
         ResponseDto dto = new ResponseDto();
         dto.setData(data);
+
+        return dto;
+    }
+
+    public static ResponseDto error(Message message) {
+        ResponseDto dto = new ResponseDto();
+        dto.setMessage(message);
 
         return dto;
     }

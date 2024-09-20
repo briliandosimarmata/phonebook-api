@@ -6,6 +6,10 @@ import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
+
 @Repository
 public class ContactJPARepository extends SimpleJpaRepository<ContactEntity, String> implements ContactRepository {
 
@@ -61,5 +65,21 @@ public class ContactJPARepository extends SimpleJpaRepository<ContactEntity, Str
         return new Contact(contactEntity.getId(), contactEntity.getName(),
                 contactEntity.getPhoneNumber(), contactEntity.getAvatar(),
                 contactEntity.getVersion());
+    }
+
+    @Override
+    public List<Contact> findAllContact() {
+        List<Contact> contacts = new ArrayList<>();
+        List<ContactEntity> contactEntities = findAll();
+
+        contactEntities.forEach(
+                contactEntity -> {
+                    contacts.add(new Contact(contactEntity.getId(),
+                            contactEntity.getName(), contactEntity.getPhoneNumber(),
+                            contactEntity.getAvatar(), contactEntity.getVersion()));
+                }
+        );
+
+        return contacts;
     }
 }

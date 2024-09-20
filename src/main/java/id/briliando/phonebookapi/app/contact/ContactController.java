@@ -2,9 +2,12 @@ package id.briliando.phonebookapi.app.contact;
 
 import id.briliando.phonebookapi.app.base.ResponseDto;
 import id.briliando.phonebookapi.core.contact.Contact;
+import id.briliando.phonebookapi.core.contact.ContactQueryService;
 import id.briliando.phonebookapi.core.contact.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/contact")
@@ -13,14 +16,16 @@ public class ContactController {
     /**
      * notes: request dan response dto dibedakan, sesuai konsep single responsiblity
      * walau sekarang isinya sama,
-     *  siapa tau suatu saat ada informasi dari request yang perlu ditambah/dikurangi
+     * siapa tau suatu saat ada informasi dari request yang perlu ditambah/dikurangi
      */
 
     private final ContactService service;
+    private final ContactQueryService queryService;
 
     @Autowired
-    public ContactController(ContactService service) {
+    public ContactController(ContactService service, ContactQueryService queryService) {
         this.service = service;
+        this.queryService = queryService;
     }
 
     @GetMapping("/{id}")
@@ -50,5 +55,11 @@ public class ContactController {
         contact.setId(id);
         contact.setVersion(version);
         service.deleteContact(contact);
+    }
+
+    @GetMapping
+    public ResponseDto findAllContact() {
+        List<Contact> contacts = queryService.findAllContact();
+        return ResponseDto.data(ContactResponseDto.fromDomains(contacts));
     }
 }

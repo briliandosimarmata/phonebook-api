@@ -1,5 +1,7 @@
 package id.briliando.phonebookapi.core.contact;
 
+import java.util.List;
+
 public interface ContactRepository {
 
     Contact addContact(Contact contact);
@@ -9,4 +11,6 @@ public interface ContactRepository {
     void deleteContact(Contact contact);
 
     Contact findContactById(String id);
+
+    List<Contact> findAllContact();
 }

@@ -7,8 +7,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.List;
 
 @JsonInclude
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -30,5 +32,17 @@ public class ContactResponseDto {
         dto.setVersion(contact.getVersion());
 
         return dto;
+    }
+
+    static List<ContactResponseDto> fromDomains(List<Contact> contacts) {
+        List<ContactResponseDto> dtos = new ArrayList<>();
+
+        contacts.forEach(
+                contact -> {
+                    dtos.add(fromDomain(contact));
+                }
+        );
+
+        return dtos;
     }
 }

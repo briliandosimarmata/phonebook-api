@@ -1,11 +1,12 @@
 package id.briliando.phonebookapi.core.contact;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.Version;
+import id.briliando.phonebookapi.infra.security.AuthUser;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "contact")
@@ -21,4 +22,9 @@ public class ContactEntity {
 
     @Version
     private Long version;
+
+    @PrePersist
+    private void prePersist() {
+        this.id = UUID.randomUUID().toString();
+    }
 }
